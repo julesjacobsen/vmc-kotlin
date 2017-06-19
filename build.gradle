@@ -1,0 +1,41 @@
+buildscript {
+	ext {
+		kotlinVersion = '1.1.2-5'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+	}
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'eclipse'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+compileKotlin {
+	kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+	kotlinOptions.jvmTarget = "1.8"
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.8.8")
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-M4")
+}
+
+wrapper {
+	gradleVersion = '4.0'
+}
