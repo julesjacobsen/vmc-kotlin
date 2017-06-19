@@ -1,2 +1,4 @@
 # vmc-kotlin
-A kotlin flovoured VMC implementation
+A kotlin flavoured VMC implementation.
+
+To build run ```./gradlew jar``` from to top level directory. Output jar file will be in ```build/libs```. 
