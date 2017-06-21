@@ -138,7 +138,7 @@ internal class ModelTest {
 
     @Test
     fun testMeta() {
-        println(mapper.writeValueAsString(meta))
+        assertEquals("{\"generatedAt\":\"2017-06-07T06:13:59.38Z\",\"version\": \"0\"}", mapper.writeValueAsString(Meta(OffsetDateTime.parse("2017-06-07T06:13:59.38Z"), "0")))
     }
 
     @Test
