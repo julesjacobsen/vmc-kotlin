@@ -1,5 +1,7 @@
 package org.ga4gh.vmckotlin
 
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Disabled
@@ -12,7 +14,13 @@ import java.time.OffsetDateTime
 internal class ModelTest {
 
     val mapper = jacksonObjectMapper()
-    val prettyMapper = jacksonObjectMapper().writerWithDefaultPrettyPrinter()
+            .registerModule(JavaTimeModule())
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+
+    val prettyMapper = jacksonObjectMapper()
+            .registerModule(JavaTimeModule())
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+            .writerWithDefaultPrettyPrinter()
 
     /**
      * In a real working code situation this will be doing a lookup against the biocommons.seqrepo
@@ -41,6 +49,31 @@ internal class ModelTest {
     val ε4ε4 = Genotype(Completeness.COMPLETE, listOf(ε4.getId(), ε4.getId()))
 
     val meta = Meta(OffsetDateTime.parse("2017-06-07T06:13:59.38Z"), "0")
+
+    @Test
+    fun testIdentifier() {
+        println(chr19GRCh38Identifier.getId())
+
+
+
+//        "VMC:GL_9Jht-lguk_jnBvG-wLJbjmBw5v_v7rQo": [
+//        {
+//            "accession": "rs429358"
+//        }
+//        ],
+//        "VMC:GL_LStELzYmlIQP3Zan9FhibgiFGAgSM7CI": [
+//        {
+//            "accession": "rs7412"
+//        }
+//        ],
+//        "VMC:GS_IIB53T8CNeJJdUqzn9V_JnRtQadwWCbl": [
+//        {
+//            "accession": "NC_000019.10",
+//            "namespace": "NCBI"
+//        }
+//        ]
+
+    }
 
     @Test
     fun testInterval() {
@@ -118,10 +151,5 @@ internal class ModelTest {
         )
         println(prettyMapper.writeValueAsString(vmcBundle))
     }
-//        "VMC:GS_IIB53T8CNeJJdUqzn9V_JnRtQadwWCbl": [
-//        {
-//            "accession": "NC_000019.10",
-//            "namespace": "NCBI"
-//        }
 
 }
